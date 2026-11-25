@@ -41,6 +41,7 @@ const nextQuoteNo = (no = "") => {
 /* The example from the PDF, so the page opens with something to preview. */
 const sampleQuote = () => ({
   id: uid(),
+  language: "en",
   quoteNo: "#00445",
   date: todayISO(),
   validity: "1month",
@@ -123,6 +124,62 @@ function quoteHTML(q) {
   const t = calc(q);
   const time = lines(q.timePeriod);
   const pay = lines(q.payment);
+  const khmer = q.language === "km";
+  const text = khmer ? {
+    title: "ប័ណ្ណសម្រង់តម្លៃ",
+    prepared: "រៀបចំដោយ",
+    tel: "ទូរស័ព្ទ",
+    email: "អ៊ីមែល",
+    address: "អាសយដ្ឋាន",
+    date: "កាលបរិច្ឆេទ",
+    validity: "រយៈពេល",
+    quoteNo: "លេខ",
+    customer: "អតិថិជន",
+    name: "ឈ្មោះ",
+    item: "ល.រ",
+    description: "បរិយាយ",
+    qty: "ចំនួន",
+    unitPrice: "តម្លៃ",
+    amount: "ទឹកប្រាក់",
+    total: "សរុប",
+    service: "ថ្លៃសេវា",
+    grand: "សរុបរួម",
+    timePeriod: "រយៈពេល",
+    scope: "ទំហំការងារ",
+    note: "កំណត់ចំណាំ",
+    currency: "រូបិយប័ណ្ណ",
+    warranty: "ការធានា",
+    payment: "ការទូទាត់",
+    preparedBy: "រៀបចំដោយ",
+    acceptedBy: "យល់ព្រម និង ទទួល"
+  } : {
+    title: "QUOTATION",
+    prepared: "Prepare by",
+    tel: "Tel",
+    email: "Email",
+    address: "Address",
+    date: "Date",
+    validity: "Validity",
+    quoteNo: "Quote No.",
+    customer: "CUSTOMER",
+    name: "Name",
+    item: "Item",
+    description: "Description",
+    qty: "Qty.",
+    unitPrice: "Unit Price",
+    amount: "Amount",
+    total: "Total Amount",
+    service: "Service",
+    grand: "Grand Total",
+    timePeriod: "Time period",
+    scope: "Scope of work",
+    note: "Note",
+    currency: "Currency",
+    warranty: "Warranty",
+    payment: "Payment",
+    preparedBy: "Prepared By",
+    acceptedBy: "Agreed & Accepted by"
+  };
 
   const rows = q.items.map((it, i) => `
     <tr>
@@ -135,49 +192,49 @@ function quoteHTML(q) {
 
   return `
   <div class="quote-page">
-    <h1 class="q-title">QUOTATION</h1>
+    <h1 class="q-title">${text.title}</h1>
     <div class="q-head">
-      ${info([["Prepare by", q.preparedBy], ["Tel", q.phone], ["Email", q.email], ["Address", q.address]], "22mm")}
-      ${info([["Date", fmtDate(q.date)], ["Validity", q.validity], ["Quote No.", q.quoteNo]], "20mm")}
+      ${info([[text.prepared, q.preparedBy], [text.tel, q.phone], [text.email, q.email], [text.address, q.address]], "22mm")}
+      ${info([[text.date, fmtDate(q.date)], [text.validity, q.validity], [text.quoteNo, q.quoteNo]], "20mm")}
     </div>
     <div class="q-rule"></div>
     <div class="q-customer">
-      <div>CUSTOMER</div>
-      ${info([["Name", q.customerName], ["Address", q.customerAddress], ["Tel", q.customerPhone]], "22mm")}
+      <div>${text.customer}</div>
+      ${info([[text.name, q.customerName], [text.address, q.customerAddress], [text.tel, q.customerPhone]], "22mm")}
     </div>
 
     <table class="q-table">
       <thead><tr>
-        <th style="width:9%">Item</th><th>Description</th>
-        <th style="width:12%">Qty.</th><th style="width:15%">Unit Price</th><th style="width:15%">Amount</th>
+        <th style="width:9%">${text.item}</th><th>${text.description}</th>
+        <th style="width:12%">${text.qty}</th><th style="width:15%">${text.unitPrice}</th><th style="width:15%">${text.amount}</th>
       </tr></thead>
       <tbody>
         ${rows}
-        <tr class="sum"><td colspan="4">Total Amount</td><td>${money(t.subtotal, sym)}</td></tr>
-        ${q.serviceFee !== "" ? `<tr class="sum"><td colspan="4">Service</td><td>${money(t.service, sym)}</td></tr>` : ""}
-        ${q.showGrandTotal ? `<tr class="sum grand"><td colspan="4">Grand Total</td><td>${money(t.grand, sym)}</td></tr>` : ""}
+        <tr class="sum"><td colspan="4">${text.total}</td><td>${money(t.subtotal, sym)}</td></tr>
+        ${q.serviceFee !== "" ? `<tr class="sum"><td colspan="4">${text.service}</td><td>${money(t.service, sym)}</td></tr>` : ""}
+        ${q.showGrandTotal ? `<tr class="sum grand"><td colspan="4">${text.grand}</td><td>${money(t.grand, sym)}</td></tr>` : ""}
       </tbody>
     </table>
 
     <div class="q-terms">
-      ${time.length ? `<div>Time period:</div><ol>${time.map((l) => `<li>${esc(l)}</li>`).join("")}</ol>` : ""}
-      ${q.scope ? `<div>Scope of work: ${esc(q.scope)}</div>` : ""}
-      ${q.note ? `<div>Note: ${esc(q.note)}</div>` : ""}
+      ${time.length ? `<div>${text.timePeriod}:</div><ol>${time.map((l) => `<li>${esc(l)}</li>`).join("")}</ol>` : ""}
+      ${q.scope ? `<div>${text.scope}: ${esc(q.scope)}</div>` : ""}
+      ${q.note ? `<div>${text.note}: ${esc(q.note)}</div>` : ""}
       <ol class="q-notes">
-        ${q.currencyName ? `<li>Currency : ${esc(q.currencyName)}</li>` : ""}
-        ${q.warranty ? `<li>Warranty : ${esc(q.warranty)}</li>` : ""}
-        ${pay.length ? `<li>Payment : ${esc(pay[0])}${pay.slice(1).map((l) => `<div>: ${esc(l)}</div>`).join("")}</li>` : ""}
+        ${q.currencyName ? `<li>${text.currency} : ${esc(q.currencyName)}</li>` : ""}
+        ${q.warranty ? `<li>${text.warranty} : ${esc(q.warranty)}</li>` : ""}
+        ${pay.length ? `<li>${text.payment} : ${esc(pay[0])}${pay.slice(1).map((l) => `<div>: ${esc(l)}</div>`).join("")}</li>` : ""}
       </ol>
     </div>
 
     <div class="q-sign">
       <div>
-        <div>Prepared By: ${esc(q.preparedBy)}</div>
+        <div>${text.preparedBy}: ${esc(q.preparedBy)}</div>
         <div class="sig-box">${q.signature ? `<img src="${q.signature}" alt="" />` : ""}</div>
         <div class="sig-line"></div>
       </div>
       <div>
-        <div>Agreed &amp; Accepted by: ${esc(q.acceptedBy)}</div>
+        <div>${text.acceptedBy}: ${esc(q.acceptedBy)}</div>
         <div class="sig-box"></div>
         <div class="sig-line"></div>
       </div>
@@ -243,6 +300,7 @@ function fillForm() {
     if (el.type === "checkbox") el.checked = !!v;
     else el.value = v ?? "";
   });
+  $("#lang-select").value = q.language || "en";
   renderItems();
   renderSaved();
   renderPreview();
@@ -359,6 +417,11 @@ $("#sig-file").addEventListener("change", (e) => {
 });
 $("#sig-remove").addEventListener("click", () => {
   q.signature = "";
+  renderPreview();
+});
+
+$("#lang-select").addEventListener("change", (e) => {
+  q.language = e.target.value;
   renderPreview();
 });
 

@@ -14,6 +14,10 @@ body {
 }
 .brand { font-weight: 700; font-size: 17px; margin-right: auto; }
 .actions { display: flex; gap: 8px; }
+.lang-select {
+  height: 32px; padding: 4px 8px; border: 1px solid #d1d5db;
+  border-radius: 8px; background: #fff; font: inherit;
+}
 .tabs { display: none; gap: 4px; }
 .body { flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(360px, 450px) 1fr; }
 .form-pane { overflow: auto; padding: 14px; background: #f9fafb; border-right: 1px solid #e5e7eb; }
