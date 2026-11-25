@@ -1,0 +1,127 @@
+* { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; }
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Noto Sans Khmer", sans-serif;
+  color: #111827; background: #f3f4f6;
+  display: flex; flex-direction: column; height: 100vh;
+}
+[hidden] { display: none !important; }
+
+/* ---------- App shell ---------- */
+.toolbar {
+  display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  padding: 10px 16px; background: #fff; border-bottom: 1px solid #e5e7eb;
+}
+.brand { font-weight: 700; font-size: 17px; margin-right: auto; }
+.actions { display: flex; gap: 8px; }
+.tabs { display: none; gap: 4px; }
+.body { flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(360px, 450px) 1fr; }
+.form-pane { overflow: auto; padding: 14px; background: #f9fafb; border-right: 1px solid #e5e7eb; }
+.preview-pane { overflow: auto; padding: 16px; background: #d1d5db; }
+.preview-zoom { width: fit-content; margin: 0 auto; }
+
+button {
+  font: inherit; font-size: 14px; padding: 7px 14px; cursor: pointer;
+  border: 1px solid #d1d5db; border-radius: 8px; background: #fff; color: #111827;
+}
+button:hover:not(:disabled) { background: #f3f4f6; }
+button:disabled { opacity: .5; cursor: not-allowed; }
+button.primary { background: #1d4ed8; border-color: #1d4ed8; color: #fff; font-weight: 600; }
+button.primary:hover:not(:disabled) { background: #1e40af; }
+button.small { padding: 4px 10px; font-size: 13px; }
+button.icon { padding: 2px 8px; font-size: 13px; }
+button.danger { color: #b91c1c; }
+button.add { width: 100%; border-style: dashed; margin-top: 4px; }
+.tabs button.on { background: #1d4ed8; color: #fff; border-color: #1d4ed8; }
+
+/* ---------- Form ---------- */
+.card { background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; padding: 14px; margin-bottom: 12px; }
+.card h3 { margin: 0 0 10px; font-size: 14px; text-transform: uppercase; letter-spacing: .04em; color: #374151; }
+.field { display: block; margin-bottom: 8px; }
+.field > span { display: block; font-size: 12px; color: #6b7280; margin-bottom: 3px; }
+input, textarea {
+  width: 100%; font: inherit; font-size: 14px; padding: 7px 9px;
+  border: 1px solid #d1d5db; border-radius: 8px; background: #fff;
+}
+input:focus, textarea:focus { outline: 2px solid #93c5fd; border-color: #3b82f6; }
+textarea { resize: vertical; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0 10px; }
+.check { display: flex; align-items: center; gap: 8px; font-size: 14px; padding: 7px 0; }
+.check input { width: auto; }
+.sig-row { display: flex; gap: 8px; align-items: center; }
+.sig-row input { font-size: 12px; }
+
+.item { border: 1px solid #e5e7eb; border-radius: 10px; padding: 10px; margin-bottom: 8px; background: #fafafa; }
+.item-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+.item-btns { display: flex; gap: 4px; }
+.item .full { margin-bottom: 6px; }
+.item-nums { display: grid; grid-template-columns: .7fr .8fr 1fr 1fr; gap: 8px; align-items: end; }
+.item-nums .field { margin: 0; }
+.amt span { display: block; font-size: 12px; color: #6b7280; margin-bottom: 3px; }
+.amt b { display: block; padding: 7px 0; font-size: 14px; }
+.totals { background: #f3f4f6; border-radius: 8px; padding: 8px 10px; font-size: 14px; }
+.totals div { display: flex; justify-content: space-between; padding: 2px 0; }
+.totals .grand { border-top: 1px solid #d1d5db; margin-top: 4px; padding-top: 6px; font-weight: 700; }
+.saved { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 8px 0; border-bottom: 1px solid #f3f4f6; font-size: 14px; }
+.muted { color: #6b7280; font-size: 12px; margin: 0; }
+
+.toast {
+  position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+  background: #111827; color: #fff; padding: 9px 16px; border-radius: 999px; font-size: 14px; z-index: 50;
+}
+.capture-host { position: absolute; left: -10000px; top: 0; pointer-events: none; }
+
+/* ---------- The quotation page (A4), laid out like the PDF ---------- */
+.quote-page {
+  width: 210mm; min-height: 297mm; padding: 15mm 14mm;
+  background: #fff; color: #000;
+  font-family: Calibri, Carlito, Arial, "Noto Sans Khmer", sans-serif;
+  font-size: 11pt; line-height: 1.35;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, .25);
+}
+.q-title { text-align: center; font-size: 12pt; font-weight: 700; margin: 0 0 6mm; }
+.q-head { display: flex; justify-content: space-between; gap: 8mm; }
+.q-head > .info:first-child { flex: 1; min-width: 0; }
+.q-head > .info:last-child { width: 62mm; flex: none; }
+.info-row { display: grid; grid-template-columns: var(--lw) 1fr; }
+.q-rule { border-bottom: 1px solid #4472c4; margin: 3mm 0; }
+.q-customer { margin-bottom: 3mm; }
+
+.q-table { width: 100%; border-collapse: collapse; margin-top: 1mm; }
+.q-table th, .q-table td { border: 1px solid #000; padding: 2.2mm 2mm; text-align: center; vertical-align: middle; }
+.q-table th { font-weight: 700; }
+.q-table tr { break-inside: avoid; }
+.q-table td:nth-child(2) { overflow-wrap: anywhere; }
+.q-table tr.sum td { text-align: right; padding-right: 6mm; }
+.q-table tr.sum td:last-child { text-align: center; padding-right: 2mm; }
+.q-table tr.grand td { font-weight: 700; }
+
+.q-terms { margin-top: 3mm; }
+.q-terms ol { margin: 0; padding-left: 8mm; }
+.q-notes { margin-top: 1mm !important; }
+
+.q-sign { display: flex; justify-content: space-between; gap: 10mm; margin-top: 10mm; break-inside: avoid; }
+.q-sign > div { flex: 1; }
+.sig-box { height: 18mm; display: flex; align-items: flex-end; }
+.sig-box img { max-height: 17mm; max-width: 55mm; }
+.sig-line { border-top: 1px solid #000; width: 45mm; }
+
+/* ---------- Narrow screens ---------- */
+@media (max-width: 960px) {
+  .tabs { display: flex; }
+  .body { grid-template-columns: 1fr; }
+  body[data-tab="edit"] .preview-pane { display: none; }
+  body[data-tab="preview"] .form-pane { display: none; }
+  .form-pane { border-right: 0; }
+}
+
+/* ---------- Print: only the A4 quotation ---------- */
+@page { size: A4; margin: 0; }
+@media print {
+  html, body, .body { height: auto !important; background: #fff !important; display: block !important; }
+  .toolbar, .form-pane, .capture-host, .toast { display: none !important; }
+  body[data-tab] .preview-pane { display: block !important; }
+  .preview-pane { padding: 0 !important; overflow: visible !important; background: #fff !important; }
+  .preview-zoom { zoom: 1 !important; width: auto; margin: 0; }
+  .quote-page { box-shadow: none; }
+}

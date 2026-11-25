@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quotation Maker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Khmer:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body data-tab="edit">
+  <header class="toolbar">
+    <div class="brand">⚡ Quotation Maker</div>
+    <div class="tabs">
+      <button id="tab-edit" class="on">Edit</button>
+      <button id="tab-preview">Preview</button>
+    </div>
+    <div class="actions">
+      <button id="btn-new">New</button>
+      <button id="btn-save">Save</button>
+      <button id="btn-print">Print</button>
+      <button id="btn-pdf" class="primary">Save PDF</button>
+    </div>
+  </header>
+
+  <main class="body">
+    <section class="form-pane" id="form">
+      <div class="card">
+        <h3>Quotation details</h3>
+        <div class="grid2">
+          <label class="field"><span>Quote No.</span><input data-k="quoteNo" /></label>
+          <label class="field"><span>Date</span><input type="date" data-k="date" /></label>
+          <label class="field"><span>Validity</span><input data-k="validity" /></label>
+          <label class="field"><span>Currency symbol</span><input data-k="currencySymbol" /></label>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Prepared by (your details)</h3>
+        <label class="field"><span>Name</span><input data-k="preparedBy" /></label>
+        <div class="grid2">
+          <label class="field"><span>Tel</span><input data-k="phone" /></label>
+          <label class="field"><span>Email</span><input data-k="email" /></label>
+        </div>
+        <label class="field"><span>Address</span><input data-k="address" /></label>
+        <label class="field"><span>Signature image (optional)</span>
+          <div class="sig-row">
+            <input type="file" id="sig-file" accept="image/*" />
+            <button class="small" id="sig-remove">Remove</button>
+          </div>
+        </label>
+      </div>
+
+      <div class="card">
+        <h3>Customer</h3>
+        <label class="field"><span>Name</span><input data-k="customerName" /></label>
+        <label class="field"><span>Address</span><input data-k="customerAddress" /></label>
+        <label class="field"><span>Tel</span><input data-k="customerPhone" /></label>
+      </div>
+
+      <div class="card">
+        <h3>Items</h3>
+        <datalist id="units"><option value="m"></option><option value="set"></option><option value="pcs"></option></datalist>
+        <div id="items"></div>
+        <button class="add" id="btn-add">+ Add item</button>
+
+        <div class="grid2" style="margin-top:12px">
+          <label class="field"><span>Service fee (empty = hide)</span><input type="number" min="0" step="any" data-k="serviceFee" /></label>
+          <div class="field"><span>Grand total row</span>
+            <label class="check"><input type="checkbox" data-k="showGrandTotal" /> Items + Service</label>
+          </div>
+        </div>
+        <div class="totals">
+          <div><span>Total Amount</span><b id="t-sub"></b></div>
+          <div><span>Service</span><b id="t-srv"></b></div>
+          <div class="grand"><span>Grand total</span><b id="t-grand"></b></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Terms</h3>
+        <label class="field"><span>Time period (one line = one numbered point)</span><textarea rows="3" data-k="timePeriod"></textarea></label>
+        <label class="field"><span>Scope of work</span><input data-k="scope" /></label>
+        <label class="field"><span>Note</span><input data-k="note" /></label>
+        <div class="grid2">
+          <label class="field"><span>Currency name</span><input data-k="currencyName" /></label>
+          <label class="field"><span>Warranty</span><input data-k="warranty" /></label>
+        </div>
+        <label class="field"><span>Payment (one line per step)</span><textarea rows="3" data-k="payment"></textarea></label>
+        <label class="field"><span>Agreed &amp; accepted by</span><input data-k="acceptedBy" /></label>
+      </div>
+
+      <div class="card">
+        <h3>Saved quotations</h3>
+        <div id="saved"></div>
+        <button class="small" id="btn-sample" style="margin-top:8px">Load the sample from the PDF</button>
+      </div>
+    </section>
+
+    <section class="preview-pane" id="pane">
+      <div class="preview-zoom" id="zoom"><div id="quote"></div></div>
+    </section>
+  </main>
+
+  <!-- Full-size hidden copy used to make the PDF -->
+  <div class="capture-host" aria-hidden="true"><div id="pdf-source"></div></div>
+  <div class="toast" id="toast" hidden></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
