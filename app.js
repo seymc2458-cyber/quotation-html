@@ -451,6 +451,21 @@ function fileName() {
   return ["Quotation", clean(q.quoteNo), clean(q.customerName)].filter(Boolean).join("-");
 }
 
+function downloadPdfBlob(blob, name) {
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = name;
+  link.rel = "noopener";
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+  if (isIOS) link.target = "_blank";
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 30000);
+  toast(isIOS ? "PDF opened — use Share to download" : "PDF downloaded");
+}
+
 $("#btn-pdf").addEventListener("click", async () => {
   const btn = $("#btn-pdf");
   const el = $("#pdf-source .quote-page");
@@ -474,7 +489,20 @@ $("#btn-pdf").addEventListener("click", async () => {
       pdf.addImage(img, "PNG", 0, y, pageW, imgH);
       remaining -= pageH;
     }
-    pdf.save(fileName() + ".pdf");
+    const name = fileName() + ".pdf";
+    const blob = pdf.output("blob");
+    const file = new File([blob], name, { type: "application/pdf" });
+
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      try {
+        await navigator.share({ files: [file], title: name });
+        toast("PDF ready");
+      } catch (err) {
+        if (err.name !== "AbortError") downloadPdfBlob(blob, name);
+      }
+    } else {
+      downloadPdfBlob(blob, name);
+    }
   } catch (err) {
     console.error(err);
     toast("PDF failed. Try the Print button instead.");
