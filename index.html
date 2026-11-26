@@ -11,94 +11,95 @@
 </head>
 <body data-tab="edit">
   <header class="toolbar">
-    <div class="brand">⚡ Quotation Maker</div>
+    <div class="brand">⚡ <span data-i18n="appTitle">Quotation Maker</span></div>
     <div class="tabs">
-      <button id="tab-edit" class="on">Edit</button>
-      <button id="tab-preview">Preview</button>
+      <button id="tab-edit" class="on" data-i18n="edit">Edit</button>
+      <button id="tab-preview" data-i18n="preview">Preview</button>
     </div>
     <div class="actions">
-      <select id="lang-select" class="lang-select" aria-label="Quotation language">
+      <select id="lang-select" class="lang-select" aria-label="Quotation language" data-i18n-aria-label="quotationLanguage">
         <option value="en">English</option>
         <option value="km">ខ្មែរ</option>
       </select>
-      <button id="btn-new">New</button>
-      <button id="btn-save">Save</button>
-      <button id="btn-print">Print</button>
-      <button id="btn-pdf" class="primary">Save PDF</button>
+      <button id="btn-new" data-i18n="new">New</button>
+      <button id="btn-save" data-i18n="save">Save</button>
+      <button id="btn-print" data-i18n="print">Print</button>
+      <button id="btn-pdf" class="primary" data-i18n="savePdf">Save PDF</button>
+      <button id="btn-theme" class="icon-button" type="button" aria-label="Switch to dark mode" title="Dark mode">Dark</button>
     </div>
   </header>
 
   <main class="body">
     <section class="form-pane" id="form">
       <div class="card">
-        <h3>Quotation details</h3>
+        <h3 data-i18n="quotationDetails">Quotation details</h3>
         <div class="grid2">
-          <label class="field"><span>Quote No.</span><input data-k="quoteNo" /></label>
-          <label class="field"><span>Date</span><input type="date" data-k="date" /></label>
-          <label class="field"><span>Validity</span><input data-k="validity" /></label>
-          <label class="field"><span>Currency symbol</span><input data-k="currencySymbol" /></label>
+          <label class="field"><span data-i18n="quoteNo">Quote No.</span><input data-k="quoteNo" /></label>
+          <label class="field"><span data-i18n="date">Date</span><input type="date" data-k="date" /></label>
+          <label class="field"><span data-i18n="validity">Validity</span><input data-k="validity" /></label>
+          <label class="field"><span data-i18n="currencySymbol">Currency symbol</span><input data-k="currencySymbol" /></label>
         </div>
       </div>
 
       <div class="card">
-        <h3>Prepared by (your details)</h3>
-        <label class="field"><span>Name</span><input data-k="preparedBy" /></label>
+        <h3 data-i18n="preparedByDetails">Prepared by (your details)</h3>
+        <label class="field"><span data-i18n="name">Name</span><input data-k="preparedBy" /></label>
         <div class="grid2">
-          <label class="field"><span>Tel</span><input data-k="phone" /></label>
-          <label class="field"><span>Email</span><input data-k="email" /></label>
+          <label class="field"><span data-i18n="tel">Tel</span><input data-k="phone" /></label>
+          <label class="field"><span data-i18n="email">Email</span><input data-k="email" /></label>
         </div>
-        <label class="field"><span>Address</span><input data-k="address" /></label>
-        <label class="field"><span>Signature image (optional)</span>
+        <label class="field"><span data-i18n="address">Address</span><input data-k="address" /></label>
+        <label class="field"><span data-i18n="signatureImage">Signature image (optional)</span>
           <div class="sig-row">
             <input type="file" id="sig-file" accept="image/*" />
-            <button class="small" id="sig-remove">Remove</button>
+            <button class="small" id="sig-remove" data-i18n="remove">Remove</button>
           </div>
         </label>
       </div>
 
       <div class="card">
-        <h3>Customer</h3>
-        <label class="field"><span>Name</span><input data-k="customerName" /></label>
-        <label class="field"><span>Address</span><input data-k="customerAddress" /></label>
-        <label class="field"><span>Tel</span><input data-k="customerPhone" /></label>
+        <h3 data-i18n="customer">Customer</h3>
+        <label class="field"><span data-i18n="name">Name</span><input data-k="customerName" /></label>
+        <label class="field"><span data-i18n="address">Address</span><input data-k="customerAddress" /></label>
+        <label class="field"><span data-i18n="tel">Tel</span><input data-k="customerPhone" /></label>
       </div>
 
       <div class="card">
-        <h3>Items</h3>
+        <h3 data-i18n="items">Items</h3>
         <datalist id="units"><option value="m"></option><option value="set"></option><option value="pcs"></option></datalist>
         <div id="items"></div>
-        <button class="add" id="btn-add">+ Add item</button>
+        <button class="add" id="btn-add" data-i18n="addItem">+ Add item</button>
 
         <div class="grid2" style="margin-top:12px">
-          <label class="field"><span>Service fee (empty = hide)</span><input type="number" min="0" step="any" data-k="serviceFee" /></label>
-          <div class="field"><span>Grand total row</span>
-            <label class="check"><input type="checkbox" data-k="showGrandTotal" /> Items + Service</label>
+          <label class="field"><span data-i18n="serviceFeeField">Service fee (empty = hide)</span><input type="number" min="0" step="any" data-k="serviceFee" /></label>
+          <div class="field"><span data-i18n="grandTotalRow">Grand total row</span>
+            <label class="check"><input type="checkbox" data-k="showGrandTotal" /> <span data-i18n="itemsPlusService">Items + Service</span></label>
           </div>
         </div>
         <div class="totals">
-          <div><span>Total Amount</span><b id="t-sub"></b></div>
-          <div><span>Service</span><b id="t-srv"></b></div>
-          <div class="grand"><span>Grand total</span><b id="t-grand"></b></div>
+          <div><span data-i18n="totalAmount">Total Amount</span><b id="t-sub"></b></div>
+          <div><span data-i18n="service">Service</span><b id="t-srv"></b></div>
+          <div class="grand"><span data-i18n="grandTotal">Grand total</span><b id="t-grand"></b></div>
         </div>
       </div>
 
       <div class="card">
-        <h3>Terms</h3>
-        <label class="field"><span>Time period (one line = one numbered point)</span><textarea rows="3" data-k="timePeriod"></textarea></label>
-        <label class="field"><span>Scope of work</span><input data-k="scope" /></label>
-        <label class="field"><span>Note</span><input data-k="note" /></label>
+        <h3 data-i18n="terms">Terms</h3>
+        <label class="field"><span data-i18n="timePeriodField">Time period (one line = one numbered point)</span><textarea rows="3" data-k="timePeriod"></textarea></label>
+        <label class="field"><span data-i18n="scope">Scope of work</span><input data-k="scope" /></label>
+        <label class="field"><span data-i18n="note">Note</span><input data-k="note" /></label>
         <div class="grid2">
-          <label class="field"><span>Currency name</span><input data-k="currencyName" /></label>
-          <label class="field"><span>Warranty</span><input data-k="warranty" /></label>
+          <label class="field"><span data-i18n="currencyName">Currency name</span><input data-k="currencyName" /></label>
+          <label class="field"><span data-i18n="warranty">Warranty</span><input data-k="warranty" /></label>
         </div>
-        <label class="field"><span>Payment (one line per step)</span><textarea rows="3" data-k="payment"></textarea></label>
-        <label class="field"><span>Agreed &amp; accepted by</span><input data-k="acceptedBy" /></label>
+        <label class="field"><span data-i18n="paymentField">Payment (one line per step)</span><textarea rows="3" data-k="payment"></textarea></label>
+        <label class="field"><span data-i18n="acceptedBy">Agreed &amp; accepted by</span><input data-k="acceptedBy" /></label>
       </div>
 
       <div class="card">
-        <h3>Saved quotations</h3>
+        <h3 data-i18n="savedQuotations">Saved quotations</h3>
         <div id="saved"></div>
-        <button class="small" id="btn-sample" style="margin-top:8px">Load the sample from the PDF</button>
+        <button class="small" id="btn-sample" style="margin-top:8px" data-i18n="loadSample">Load the sample from the PDF</button>
       </div>
     </section>
 
@@ -109,6 +110,19 @@
 
   <!-- Full-size hidden copy used to make the PDF -->
   <div class="capture-host" aria-hidden="true"><div id="pdf-source"></div></div>
+  <dialog id="pdf-dialog">
+    <form id="pdf-name-form" method="dialog">
+      <h3 data-i18n="pdfFileNameTitle">PDF file name</h3>
+      <label class="field">
+        <span data-i18n="pdfFileName">File name</span>
+        <input id="pdf-name" autocomplete="off" required />
+      </label>
+      <div class="dialog-actions">
+        <button type="button" id="pdf-cancel" data-i18n="cancel">Cancel</button>
+        <button class="primary" value="save" type="submit" data-i18n="savePdf">Save PDF</button>
+      </div>
+    </form>
+  </dialog>
   <div class="toast" id="toast" hidden></div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>

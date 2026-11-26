@@ -75,6 +75,50 @@ textarea { resize: vertical; }
 }
 .capture-host { position: absolute; left: -10000px; top: 0; pointer-events: none; }
 
+dialog {
+  width: min(420px, calc(100vw - 32px));
+  border: 0;
+  border-radius: 12px;
+  padding: 0;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, .25);
+}
+dialog::backdrop { background: rgba(17, 24, 39, .45); }
+dialog form { padding: 18px; }
+dialog h3 { margin: 0 0 14px; font-size: 16px; }
+.dialog-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 12px; }
+
+body.dark {
+  color: #e5e7eb;
+  background: #111827;
+}
+body.dark .toolbar,
+body.dark dialog,
+body.dark dialog form { background: #1f2937; border-color: #374151; }
+body.dark .brand,
+body.dark dialog h3 { color: #f9fafb; }
+body.dark .form-pane,
+body.dark .preview-pane { background: #111827; border-color: #374151; }
+body.dark .preview-pane { background: #374151; }
+body.dark .card,
+body.dark .item,
+body.dark .totals,
+body.dark input,
+body.dark textarea,
+body.dark .lang-select { background: #1f2937; color: #e5e7eb; border-color: #4b5563; }
+body.dark .card h3,
+body.dark .field > span,
+body.dark .amt span,
+body.dark .muted { color: #9ca3af; }
+body.dark button { background: #1f2937; color: #e5e7eb; border-color: #4b5563; }
+body.dark button.primary,
+body.dark .tabs button.on { background: #2563eb; border-color: #2563eb; color: #fff; }
+body.dark button:hover:not(:disabled) { background: #374151; }
+body.dark button.primary:hover:not(:disabled) { background: #1d4ed8; }
+body.dark button.danger { color: #f87171; }
+body.dark .saved,
+body.dark .totals .grand { border-color: #4b5563; }
+body.dark .icon-button { min-width: 52px; }
+
 /* ---------- The quotation page (A4), laid out like the PDF ---------- */
 .quote-page {
   width: 210mm; min-height: 297mm; padding: 15mm 14mm;
@@ -123,7 +167,7 @@ textarea { resize: vertical; }
 @page { size: A4; margin: 0; }
 @media print {
   html, body, .body { height: auto !important; background: #fff !important; display: block !important; }
-  .toolbar, .form-pane, .capture-host, .toast { display: none !important; }
+  .toolbar, .form-pane, .capture-host, .toast, dialog { display: none !important; }
   body[data-tab] .preview-pane { display: block !important; }
   .preview-pane { padding: 0 !important; overflow: visible !important; background: #fff !important; }
   .preview-zoom { zoom: 1 !important; width: auto; margin: 0; }
